@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcarva — Know Your Habits. Change Your Body.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060A12;
+      --card: #0D1320;
+      --border: rgba(255,255,255,0.07);
+      --text: #EFF4FF;
+      --muted: rgba(239,244,255,0.48);
+      --accent: #38BDF8;
+      --purple: #A78BFA;
+      --orange: #FB923C;
+      --green: #34D399;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 700px 500px at 15% 5%, rgba(56,189,248,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 500px at 85% 85%, rgba(167,139,250,0.08) 0%, transparent 70%);
+    }
+    .container { max-width: 480px; margin: 0 auto; padding: 0 22px 80px; position: relative; z-index: 1; }
+
+    /* HERO */
+    .hero { text-align: center; padding: 52px 0 44px; }
+    .logo-wrap {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; margin-bottom: 24px;
+    }
+    .logo-icon { width: 72px; filter: drop-shadow(0 0 20px rgba(167,139,250,0.45)); }
+    .logo-wordmark {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.05rem; letter-spacing: 0.04em;
+      color: rgba(239,244,255,0.72); text-transform: lowercase;
+    }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.22);
+      color: var(--green); font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      padding: 5px 13px; border-radius: 20px; margin-bottom: 26px;
+    }
+    .live-badge .dot {
+      width: 6px; height: 6px; background: var(--green);
+      border-radius: 50%; animation: blink 2s ease infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
+    .hero h1 {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
+      line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 18px;
+    }
+    .hero h1 em {
+      display: block; font-style: italic;
+      font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 2.1rem;
+      background: linear-gradient(100deg, var(--accent) 0%, var(--purple) 60%, var(--orange) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero .sub {
+      color: var(--muted); font-size: 1rem; line-height: 1.7;
+      max-width: 340px; margin: 0 auto 30px;
+    }
+    .cta-btn {
+      display: block; padding: 16px 24px; border-radius: 14px;
+      background: linear-gradient(110deg, #0EA5E9 0%, #7C3AED 50%, #EA580C 100%);
+      background-size: 200%; color: white; font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1rem; letter-spacing: 0.01em;
+      text-decoration: none; text-align: center;
+      box-shadow: 0 8px 32px rgba(124,58,237,0.28);
+      animation: gradshift 5s ease infinite alternate;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    @keyframes gradshift { from{background-position:0%} to{background-position:100%} }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(124,58,237,0.42); }
+    .cta-btn:active { transform: scale(0.98); }
+    .cta-sub { font-size: 0.74rem; color: var(--muted); text-align: center; margin-top: 9px; }
+
+    /* SECTIONS */
+    .section { margin-top: 56px; }
+    .section-label {
+      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+    }
+    .section-label span { color: var(--accent); margin-right: 5px; }
+    .section-head {
+      font-family: 'Syne', sans-serif; font-size: 1.6rem;
+      font-weight: 800; line-height: 1.15; margin-bottom: 12px;
+    }
+
+    /* PHONE */
+    .phone-frame {
+      position: relative; background: #0a0a0a;
+      border-radius: 38px; border: 7px solid #1A2235;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 32px 64px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+      overflow: hidden; max-width: 260px; margin: 0 auto;
+    }
+    .phone-notch {
+      position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 20px; background: #0a0a0a;
+      border-radius: 0 0 12px 12px; z-index: 10;
+    }
+    .phone-frame img { width: 100%; display: block; }
+    .phone-frame::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 70px;
+      background: linear-gradient(to bottom, transparent, #0a0a0a);
+    }
+    .screenshot-caption {
+      text-align: center; margin-top: 16px;
+      font-size: 0.8rem; color: var(--muted); font-style: italic;
+    }
+    .screenshot-caption strong { color: var(--text); font-style: normal; }
+
+    /* VOICE CARD — Kwaw photo pops out top */
+    .voice-card-wrap {
+      position: relative;
+      margin-top: 44px; /* extra space for the overflowing photo */
+    }
+
+    .kwaw-photo-wrap {
+      position: absolute;
+      top: -44px;
+      left: 20px;
+      z-index: 10;
+    }
+
+    .kwaw-photo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 10%;
+      border: 3px solid var(--card);
+      outline: 2px solid rgba(56,189,248,0.4);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 4px rgba(56,189,248,0.08);
+      display: block;
+    }
+
+    .voice-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 52px 20px 20px;
+      position: relative; overflow: visible;
+    }
+    .voice-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      border-radius: 20px 20px 0 0;
+      background: linear-gradient(90deg, var(--accent), var(--purple), var(--orange));
+    }
+
+    .voice-person-inline {
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px;
+    }
+    .voice-meta-name { font-weight: 600; font-size: 1rem; }
+    .voice-meta-sub { font-size: 0.73rem; color: var(--muted); line-height: 1.5; }
+
+    .voice-quote {
+      background: rgba(56,189,248,0.06); border-left: 2px solid var(--accent);
+      border-radius: 0 10px 10px 0; padding: 11px 14px; margin-bottom: 14px;
+      font-size: 0.88rem; font-style: italic; line-height: 1.65; color: var(--text);
+    }
+    .voice-note-label {
+      font-size: 0.72rem; color: var(--muted); margin-bottom: 10px; line-height: 1.6;
+    }
+    .voice-note-label strong { color: var(--accent); }
+    audio { width: 100%; border-radius: 10px; accent-color: var(--accent); }
+
+    /* PHASES */
+    .phases { display: flex; flex-direction: column; gap: 10px; }
+    .phase-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 16px 18px;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+    .phase-card:hover { border-color: rgba(255,255,255,0.13); }
+    .phase-num {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.5rem; line-height: 1; flex-shrink: 0; width: 30px;
+    }
+    .p1 .phase-num { color: var(--accent); }
+    .p2 .phase-num { color: var(--purple); }
+    .p3 .phase-num { color: var(--orange); }
+    .phase-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+    .phase-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* DIFF */
+    .diff-grid { display: flex; flex-direction: column; gap: 10px; }
+    .diff-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .diff-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .diff-body { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+    .diff-body strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 0.92rem; }
+
+    /* FINAL CTA */
+    .final-cta { margin-top: 56px; text-align: center; }
+    .final-cta h2 {
+      font-family: 'Syne', sans-serif; font-size: 1.75rem;
+      font-weight: 800; margin-bottom: 12px; line-height: 1.18;
+    }
+    .final-cta p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 22px; }
+
+    .footer {
+      text-align: center; margin-top: 44px; font-size: 0.72rem; color: var(--muted);
+      border-top: 1px solid var(--border); padding-top: 24px;
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .hero > * { animation: fadeUp 0.55s ease both; }
+    .hero > *:nth-child(1){animation-delay:.05s}
+    .hero > *:nth-child(2){animation-delay:.12s}
+    .hero > *:nth-child(3){animation-delay:.2s}
+    .hero > *:nth-child(4){animation-delay:.28s}
+    .hero > *:nth-child(5){animation-delay:.36s}
+    .hero > *:nth-child(6){animation-delay:.44s}
+  </style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="live-badge"><span class="dot"></span>Cohort 1 complete · Cohort 2 loading</div>
+    <div class="logo-wrap">
+<img src="assets/logo.png" class="logo-icon" alt="Upcarva">
+      <span class="logo-wordmark">upcarva</span>
+    </div>
+    <h1>"Damn.<em>I'm flabbergasted."</em></h1>
+    <p class="sub">That's what happens when you finally see your own habits clearly — for the first time.</p>
+    <a class="cta-btn" href="https://wa.me/233504294174?text=Hi%20I%20want%20to%20join%20Upcarva" target="_blank">
+      Join Cohort 2 via WhatsApp →
+    </a>
+    <p class="cta-sub">Limited to 10 people &nbsp;·&nbsp; GHS 200 to start</p>
+  </div>
+
+  <!-- WHAT -->
+  <div class="section">
+    <div class="section-label"><span>01</span>What is this</div>
+    <div class="section-head">Not a diet plan.<br>A mirror.</div>
+    <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin-top:10px;">
+      Upcarva observes how you <em>actually</em> eat — not how you think you eat.
+      Over 14 days you log your meals, and we build a full picture of your real habits,
+      your triggers, your blind spots. Then we show you exactly what to change and why.
+      No generic meal plans. No calorie obsession. Precision built around you.
+    </p>
+  </div>
+
+  <!-- THE MOMENT -->
+  <div class="section">
+    <div class="section-label"><span>02</span>Real reaction · unfiltered</div>
+    <div class="section-head">"Oh yeah.<br>A lot."</div>
+    <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;margin-bottom:22px;">
+      Kwaw got his Phase 1 report on a Sunday evening.<br>These were his next four messages.
+    </p>
+
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <img src="assets/text.png" alt="whatsapp testimonial">
+    </div>
+    <p class="screenshot-caption">
+      <strong>Kwaw, 30</strong> · reacting to his Phase 1 report in real time.
+    </p>
+
+    <!-- Voice card with photo popping out -->
+    <div class="voice-card-wrap">
+      <div class="kwaw-photo-wrap">
+        <img src="assets/kwaw.jpg" class="kwaw-photo" alt="kwaw">
+      </div>
+      <div class="voice-card">
+        <div class="voice-person-inline">
+          <div class="voice-meta-name">Kwaw</div>
+          <div class="voice-meta-sub">· Cohort 1 · voice note · Twi + English · unedited</div>
+        </div>
+        <div class="voice-quote">
+          "Other apps give you generic results… but this process — this actually understands me."
+        </div>
+        <p class="voice-note-label">
+          <strong>We didn't translate this.</strong> It's in Twi mixed with English, exactly as sent.
+          The feeling comes through regardless. Press play.
+        </p>
+        <audio controls preload="none">
+          <source src="assets/kwaw.m4a">
+        </audio>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="section-label"><span>03</span>How it works</div>
+    <div class="section-head" style="margin-bottom:16px;">Three phases.<br>One direction.</div>
+    <div class="phases">
+      <div class="phase-card p1">
+        <div class="phase-num">1</div>
+        <div>
+          <div class="phase-title">Know your habits — 14 days</div>
+          <div class="phase-desc">Log what you eat, when, and why. No judgment. You get a full personal report — body composition estimate, macro analysis, behaviour patterns, and exactly what to fix first.</div>
+        </div>
+      </div>
+      <div class="phase-card p2">
+        <div class="phase-num">2</div>
+        <div>
+          <div class="phase-title">Fix the patterns</div>
+          <div class="phase-desc">Three personalised experiments based on your data. You try them, keep logging, and we find what actually fits your life. No meal plan you'll abandon in a week.</div>
+        </div>
+      </div>
+      <div class="phase-card p3">
+        <div class="phase-num">3</div>
+        <div>
+          <div class="phase-title">Make it permanent</div>
+          <div class="phase-desc">Once your habits are stable, we introduce precision — calories, macros, gym programming. By this point it doesn't feel like a diet. It feels like you.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY DIFFERENT -->
+  <div class="section">
+    <div class="section-label"><span>04</span>Why it's different</div>
+    <div class="diff-grid">
+      <div class="diff-item">
+        <div class="diff-icon">📊</div>
+        <div class="diff-body">
+          <strong>Built from your actual data</strong>
+          Not a template. Every observation and recommendation is drawn from what you specifically logged over 14 days.
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🇬🇭</div>
+        <div class="diff-body">
+          <strong>Built for how we actually eat</strong>
+          Waakye. Jollof. Banku. Fufu. Tom brown. We know Ghanaian food and build plans around it — not chicken breast and broccoli.
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🧠</div>
+        <div class="diff-body">
+          <strong>Behaviour-first, not calorie-first</strong>
+          Calorie counting fails most people because it treats symptoms, not causes. We find the habits driving the problem.
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🎯</div>
+        <div class="diff-body">
+          <strong>80% is enough</strong>
+          You don't need to be perfect. You need to be consistent. The system is designed around sustainable change — not punishment when you slip.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <h2>Ready to see<br>your habits clearly?</h2>
+    <p>Cohort 2 is loading. Limited to 10 people.<br>GHS 200 gets you into Phase 1 — your full personal report.</p>
+    <a class="cta-btn" href="https://wa.me/233504294174?text=Hi%20I%20want%20to%20join%20Upcarva" target="_blank">
+      Secure Your Spot on WhatsApp →
+    </a>
+    <p class="cta-sub" style="margin-top:10px;">Cohort 1 is already asking for Phase 2.</p>
+  </div>
+
+  <div class="footer">Upcarva © 2026 &nbsp;·&nbsp; Ghana &nbsp;·&nbsp; upcarva.com</div>
+
+</div>
+</body>
+</html>
